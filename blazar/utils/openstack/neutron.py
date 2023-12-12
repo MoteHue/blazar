@@ -81,7 +81,8 @@ class BlazarNeutronClient(object):
                            project_name=project_name,
                            user_domain_name=user_domain_name,
                            project_domain_name=project_domain_name)
-        sess = session.Session(auth=auth, verify=False)
+        LOG.warning('neutron: %s', str(CONF.auth_cafile))
+        sess = session.Session(auth=auth, verify=str(CONF.auth_cafile))
         kwargs.setdefault('session', sess)
         kwargs.setdefault('region_name', region_name)
         kwargs.setdefault('endpoint_type', CONF.neutron.endpoint_type + 'URL')

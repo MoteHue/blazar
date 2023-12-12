@@ -24,9 +24,10 @@ from oslo_config import cfg
 from blazar import context
 from blazar.manager import exceptions
 
+from oslo_log import log as logging
 
 CONF = cfg.CONF
-
+LOG = logging.getLogger(__name__)
 
 def get_os_auth_host(conf):
     """Description
@@ -85,7 +86,9 @@ def client_kwargs(**_kwargs):
         auth_kwargs.update(project_name=project_name)
 
     auth = v3.Password(**auth_kwargs)
-    sess = session.Session(auth=auth, verify=False)
+
+    LOG.warning('base1: %s', str(CONF.auth_cafile))
+    sess = session.Session(auth=auth, verify=str(CONF.auth_cafile))
 
     kwargs.setdefault('session', sess)
     kwargs.setdefault('region_name', region_name)
@@ -117,7 +120,8 @@ def client_user_kwargs(**_kwargs):
     data = admin_ks_client.tokens.get_token_data(ctx.auth_token)
     access_info = create_access_info(body=data, auth_token=ctx.auth_token)
     auth = access.AccessInfoPlugin(access_info, auth_url=auth_url)
-    sess = session.Session(auth=auth, verify=False)
+    LOG.warning('base2: %s', str(CONF.auth_cafile))
+    sess = session.Session(auth=auth, verify=str(CONF.auth_cafile))
 
     kwargs.setdefault('session', sess)
     kwargs.setdefault('region_name', region_name)

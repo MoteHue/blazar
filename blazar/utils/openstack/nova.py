@@ -158,7 +158,8 @@ class BlazarNovaClient(object):
         else:
             auth = token_endpoint.Token(endpoint_override,
                                         auth_token)
-            sess = session.Session(auth=auth, verify=False)
+            LOG.warning('nova: %s', str(CONF.auth_cafile))
+            sess = session.Session(auth=auth, verify=str(CONF.auth_cafile))
             kwargs.setdefault('session', sess)
 
         kwargs.setdefault('endpoint_type', CONF.nova.endpoint_type + 'URL')
