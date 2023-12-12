@@ -154,11 +154,11 @@ class BlazarNovaClient(object):
                 kwargs.setdefault('project_domain_name', project_domain_name)
                 kwargs.setdefault('user_domain_name', user_domain_name)
 
-            kwargs.setdefault('insecure', True)
+            kwargs.setdefault('cacert', CONF.auth_cafile)
         else:
             auth = token_endpoint.Token(endpoint_override,
                                         auth_token)
-            sess = session.Session(auth=auth, verify=False)
+            sess = session.Session(auth=auth, verify=(CONF.auth_cafile or True))
             kwargs.setdefault('session', sess)
 
         kwargs.setdefault('endpoint_type', CONF.nova.endpoint_type + 'URL')
