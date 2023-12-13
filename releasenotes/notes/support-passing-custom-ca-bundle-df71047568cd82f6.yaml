@@ -1,0 +1,7 @@
+---
+fixes:
+  - |
+    The Blazar client now supports passing a custom CA certificate bundle. This
+    allows for deployment on OpenStack clouds that are using endpoints
+    protected with HTTPS.
+    `LP#2045281 <https://launchpad.net/bugs/2045281>`__
