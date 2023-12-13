@@ -66,8 +66,9 @@ os_opts = [
     cfg.StrOpt('os_admin_project_domain_name',
                default='Default',
                help='A domain name the os_admin_project_name belongs to'),
-    cfg.StrOpt('auth_cafile',
-               help='CA certificates file path.'),
+    cfg.StrOpt('os_auth_cafile',
+               help='Path the the CA certificates bundle for verification when'
+                    'using internal TLS.'),
 ]
 
 api_opts = [
